@@ -1,0 +1,15 @@
+{
+  "name": "coupang-price-error-alert",
+  "version": "1.0.0",
+  "private": true,
+  "description": "쿠팡 가격 오류 의심 상품을 텔레그램으로 알려주는 봇",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node src/index.js",
+    "dry": "node src/index.js --dry-run",
+    "test": "node --test test/",
+    "chat-id": "node scripts/get-chat-id.js",
+    "test-message": "node scripts/test-message.js"
+  }
+}

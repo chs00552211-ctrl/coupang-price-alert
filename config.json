@@ -1,0 +1,22 @@
+{
+  "dropThreshold": 0.5,
+  "minHistory": 3,
+
+  "partners": {
+    "intervalMinutes": 30,
+    "categories": { "1016": "IT", "1012": "식품" },
+    "categoryLimit": 50,
+    "goldbox": true,
+    "keywords": ["아이패드", "맥북", "갤럭시", "라면", "생수"],
+    "keywordLimit": 10
+  },
+
+  "community": {
+    "feeds": [
+      { "name": "뽐뿌", "url": "https://www.ppomppu.co.kr/rss.php?id=ppomppu", "fetchPost": false },
+      { "name": "루리웹 핫딜", "url": "https://bbs.ruliweb.com/market/board/1020/rss", "fetchPost": true }
+    ],
+    "errorKeywords": ["가격오류", "가격 오류", "가오", "오류", "버그", "오타", "실수", "미친가격", "말도 안", "0 하나", "0하나", "역대급"],
+    "alertAllCoupang": false
+  }
+}
