@@ -12,7 +12,9 @@ export function formatAlert(a) {
   const lines = ['🚨 <b>쿠팡 가격 오류 의심</b>', ''];
   lines.push(`${THEME_ICON[a.theme] || '📦'} 테마: <b>${esc(a.theme)}</b>`);
   lines.push(`🛒 상품: ${esc(a.name)}`);
-  lines.push(`💰 원래 가격: ${a.originalPrice ? `<s>${won(a.originalPrice)}</s>` : '확인 안 됨'}`);
+  lines.push(`💰 원래 가격: ${a.originalPrice
+    ? `<s>${won(a.originalPrice)}</s>${a.originalSource ? ` (${esc(a.originalSource)})` : ''}`
+    : '확인 안 됨'}`);
   if (a.currentPrice) {
     const off = a.originalPrice && a.originalPrice > a.currentPrice
       ? ` (${Math.round((1 - a.currentPrice / a.originalPrice) * 100)}% ↓)`

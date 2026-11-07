@@ -66,3 +66,23 @@ test('파트너스 서명 형식', () => {
   const a = authorization('GET', '/v2/x?keyword=a', 'AK', 'SK', new Date('2026-11-07T01:02:03Z'));
   assert.match(a, /^CEA algorithm=HmacSHA256, access-key=AK, signed-date=261107T010203Z, signature=[0-9a-f]{64}$/);
 });
+
+import { referencePrice } from '../src/naver.js';
+
+test('네이버 시세 계산', () => {
+  const mk = (title, lprice, mallName = '스토어') => ({ title, lprice: String(lprice), mallName, category1: '식품', category2: '라면' });
+  const items = [
+    mk('농심 <b>육개장</b> 사발면 86g 36개', 28000),
+    mk('농심 육개장 사발면 86g 36개 박스', 29500),
+    mk('육개장 사발면 86g 36개입', 27000),          // 36개입 ≠ 36개 → 제외
+    mk('농심 육개장 사발면 86g 36개', 31000),
+    mk('농심 육개장 사발면 86g 6개', 6000),           // 수량 다름 → 제외
+    mk('농심 육개장 사발면 86g 36개', 5040, '쿠팡'),  // 쿠팡 → 제외
+    mk('삼양 불닭볶음면 5개', 4500),                  // 다른 상품 → 제외
+  ];
+  const r = referencePrice('농심 육개장 사발면 86g 36개', items);
+  assert.equal(r.price, 29500);
+  assert.equal(r.samples, 3);
+  assert.match(r.category, /식품/);
+  assert.equal(referencePrice('아무도 안 파는 상품', items), null);
+});

@@ -1,4 +1,5 @@
 import { classify } from './classify.js';
+import { naverReferencePrice } from './naver.js';
 import {
   fetchText, decodeEntities, priceFromTitle, originalFromText, findCoupangUrl,
   coupangProductId, coupangSearchUrl, median,
@@ -43,7 +44,7 @@ function postBodyText(html) {
 /**
  * @returns {Promise<{alerts: object[], errors: string[]}>}
  */
-export async function checkCommunity(cfg, state, { dropThreshold, minHistory, includeOld = false }) {
+export async function checkCommunity(cfg, state, { dropThreshold, minHistory, includeOld = false, naver = null }) {
   const alerts = [];
   const errors = [];
   const seen = new Set(state.seenPosts);
@@ -83,11 +84,31 @@ export async function checkCommunity(cfg, state, { dropThreshold, minHistory, in
       const name = productNameFromTitle(item.title);
       const currentPrice = priceFromTitle(item.title);
 
-      // 원래 가격: 1) 우리가 기록해 둔 평소 가격 2) 글에 적힌 정가
+      // 원래 가격: 1) 우리가 기록해 둔 평소 가격 2) 글에 적힌 정가 3) 네이버 쇼핑 시세
       let originalPrice = null;
+      let originalSource = null;
+      let naverCategory = '';
       const hist = state.prices[coupangProductId(coupangUrl)]?.hist;
-      if (hist && hist.length >= minHistory) originalPrice = median(hist.map((h) => h.p));
-      originalPrice ||= originalFromText(item.description) || originalFromText(bodyText);
+      if (hist && hist.length >= minHistory) {
+        originalPrice = median(hist.map((h) => h.p));
+        originalSource = '쿠팡 평소 가격';
+      }
+      if (!originalPrice) {
+        originalPrice = originalFromText(item.description) || originalFromText(bodyText);
+        if (originalPrice) originalSource = '글에 적힌 정가';
+      }
+      if (!originalPrice && naver) {
+        try {
+          const ref = await naverReferencePrice(name, naver);
+          if (ref) {
+            originalPrice = ref.price;
+            originalSource = `네이버 쇼핑 시세, 비슷한 상품 ${ref.samples}개 기준`;
+            naverCategory = ref.category;
+          }
+        } catch (e) {
+          errors.push(e.message);
+        }
+      }
 
       const bigDrop = originalPrice && currentPrice && currentPrice <= originalPrice * (1 - dropThreshold);
       if (!keyword && !bigDrop && !cfg.alertAllCoupang) continue;
@@ -99,9 +120,10 @@ export async function checkCommunity(cfg, state, { dropThreshold, minHistory, in
       alerts.push({
         key: `c:${item.link}`,
         name,
-        theme: classify(name, item.category),
+        theme: classify(name, item.category || naverCategory),
         currentPrice,
         originalPrice,
+        originalSource,
         url: coupangUrl || coupangSearchUrl(name),
         isSearchLink: !coupangUrl,
         source: feed.name,

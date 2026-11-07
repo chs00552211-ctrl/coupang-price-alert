@@ -22,7 +22,11 @@ const opts = {
   dropThreshold: config.dropThreshold,
   minHistory: config.minHistory,
   includeOld: process.argv.includes('--include-old'),
+  naver: process.env.NAVER_CLIENT_ID && process.env.NAVER_CLIENT_SECRET
+    ? { clientId: process.env.NAVER_CLIENT_ID, clientSecret: process.env.NAVER_CLIENT_SECRET }
+    : null,
 };
+if (!opts.naver) console.log('네이버 쇼핑 키가 없어서 시세 조회는 건너뛰어요.');
 const alerts = [];
 const errors = [];
 
@@ -55,6 +59,7 @@ if (hasKeys && (due || process.env.FORCE_PARTNERS === '1')) {
         theme: p.theme,
         currentPrice: p.price,
         originalPrice: baseline,
+        originalSource: '쿠팡 평소 가격',
         url: p.url,
         source: '쿠팡 파트너스 API 가격 추적',
         reason: `최근 ${rec.hist.length - 1}번 기록한 평소 가격보다 ${Math.round((1 - p.price / baseline) * 100)}% 낮음`,
