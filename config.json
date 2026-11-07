@@ -16,7 +16,7 @@
       { "name": "뽐뿌", "url": "https://www.ppomppu.co.kr/rss.php?id=ppomppu", "fetchPost": false },
       { "name": "루리웹 핫딜", "url": "https://bbs.ruliweb.com/market/board/1020/rss", "fetchPost": true }
     ],
-    "errorKeywords": ["가격오류", "가격 오류", "가오", "오류", "버그", "오타", "실수", "미친가격", "말도 안", "0 하나", "0하나", "역대급"],
+    "errorKeywords": ["가격오류", "가격 오류", "가오", "오류", "버그", "오타", "실수", "미친가격", "말도 안", "0 하나", "0하나", "역대급", "품절"],
     "alertAllCoupang": false
   }
 }
