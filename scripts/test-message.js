@@ -7,7 +7,6 @@ const text = formatAlert({
   theme: 'IT',
   currentPrice: 830000,
   originalPrice: 2399000,
-  originalSource: '네이버 쇼핑 시세, 비슷한 상품 12개 기준',
   url: 'https://www.coupang.com/vp/products/0000000000',
   source: '테스트 메시지',
   reason: '알림 형식 확인용 샘플이에요',

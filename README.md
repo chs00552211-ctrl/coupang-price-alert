@@ -8,8 +8,7 @@ GitHub Actions에서 10분마다 자동으로 돌아가요. PC를 꺼도 괜찮�
 1. **핫딜 커뮤니티 (뽐뿌, 루리웹 핫딜)**
    새로 올라온 쿠팡 글 중에서 "가격오류", "오류", "버그" 같은 말이 있거나, 원래 가격보다 50% 넘게 싼 글을 골라요.
    루리웹 글은 본문에서 쿠팡 상품 링크를 꺼내요. 뽐뿌는 본문 접근이 막혀 있어서 쿠팡 검색 링크를 붙여요.
-   글에 원래 가격이 없으면 **네이버 쇼핑 검색 API**로 같은 상품(이름·수량이 비슷한 것)의 다른 쇼핑몰 가격 중간값을 찾아 "원래 가격"으로 보여줘요.
-   쿠팡이 원래 받던 가격과 정확히 같지는 않은 참고 시세예요. 비슷한 상품이 3개 미만이면 "확인 안 됨"으로 둬요.
+   원래 가격은 글에 "정가 OO원"처럼 적혀 있을 때만 보여주고, 없으면 "확인 안 됨"으로 둬요.
 2. **쿠팡 파트너스 API** (누적 판매 15만 원 이상으로 최종 승인을 받아야 키가 나와요)
    IT(가전디지털)·식품 베스트 상품, 골드박스, 지정한 키워드 상품의 가격을 30분마다 기록해요.
    지금 가격이 평소 가격(최근 기록의 중간값)보다 50% 넘게 떨어지면 알려줘요.
@@ -47,13 +46,6 @@ https://www.coupang.com/vp/products/...
 1. https://partners.coupang.com 에 가입해요.
 2. 최종 승인을 받은 뒤 **추가 기능 > 오픈 API**에서 Access Key와 Secret Key를 받아요.
 
-### 2-1. 네이버 쇼핑 검색 API 키 받기 (추천)
-1. https://developers.naver.com 에 네이버 아이디로 로그인해요.
-2. **Application → 애플리케이션 등록**에서 이름을 아무거나 넣고, 사용 API에서 **검색**을 골라요.
-3. 환경은 **WEB 설정**을 고르고 URL에 `https://github.com`을 넣어요.
-4. 등록하면 나오는 **Client ID**와 **Client Secret**을 Secrets에 `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET`으로 넣어요.
-   하루 25,000번까지 무료예요.
-
 ### 3. GitHub에 올리기
 1. GitHub에서 새 저장소를 만들어요. **Public**으로 만들어야 Actions가 무제한 무료예요.
    (Private은 한 달 2,000분까지 무료라서 10분 간격이면 모자라요. Private으로 하려면 `watch.yml`의 간격을 `*/30`으로 바꿔요.)
@@ -67,8 +59,6 @@ https://www.coupang.com/vp/products/...
    | `TELEGRAM_CHAT_ID` | chat_id |
    | `COUPANG_ACCESS_KEY` | 파트너스 Access Key (선택) |
    | `COUPANG_SECRET_KEY` | 파트너스 Secret Key (선택) |
-   | `NAVER_CLIENT_ID` | 네이버 Client ID (선택) |
-   | `NAVER_CLIENT_SECRET` | 네이버 Client Secret (선택) |
 
 4. **Actions** 탭에서 워크플로를 켜고, "쿠팡 가격 오류 감시" > **Run workflow**로 한 번 실행해 봐요.
    첫 실행은 지금 있는 글을 기록만 하고 알림은 보내지 않아요. 그다음부터 새 글을 알려줘요.
