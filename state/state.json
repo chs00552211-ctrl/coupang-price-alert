@@ -1,10 +1,5 @@
 {
  "seenPosts": [
-  "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=747819",
-  "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=747818",
-  "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=747817",
-  "https://bbs.ruliweb.com/market/board/1020/read/108931",
-  "https://bbs.ruliweb.com/market/board/1020/read/108930",
   "https://bbs.ruliweb.com/market/board/1020/read/108929",
   "https://bbs.ruliweb.com/market/board/1020/read/108928",
   "https://bbs.ruliweb.com/market/board/1020/read/108927",
@@ -999,7 +994,12 @@
   "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=749003",
   "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=749002",
   "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=749001",
-  "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=749000"
+  "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=749000",
+  "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=749011",
+  "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=749010",
+  "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=749009",
+  "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=749008",
+  "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=749007"
  ],
  "alerted": [],
  "prices": {},
